@@ -73,7 +73,8 @@ fi
 
 
 if calibre_is_installed; then
-    LATESTCALIBREVERS=`curl --silent --max-time 10 https://api.github.com/repos/kovidgoyal/calibre/releases/latest | jq --raw-output '.tag_name' | cut -c2-6 -`
+    LATESTCALIBREVERS=`curl --silent --max-time 10 https://api.github.com/repos/kovidgoyal/calibre/releases/latest | jq --raw-output '.tag_name'`
+    LATESTCALIBREVERS=${LATESTCALIBREVERS:1}
     calibre-debug -c "from calibre.constants import numeric_version; raise SystemExit(int(numeric_version  < (tuple(map(int, '$LATESTCALIBREVERS'.split('.'))))))"
     UP_TO_DATE=$?
 else
